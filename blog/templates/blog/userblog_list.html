@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% for blog in object_list %}
+        <p>{{ blog.owner }}</p>
+        {% if blog.owner not in feed %}
+            <p><a href="{% url 'add-feed' blog.owner.pk %}">Подписаться</a></p>
+        {% else %}
+            <p><a href="{% url 'del-feed' blog.owner.pk %}">Отписаться</a></p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

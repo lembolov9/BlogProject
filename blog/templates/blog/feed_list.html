@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% for post in object_list %}
+        <p>Пост: {{ post.title }}</p>
+        <p>{{ post.text }}</p>
+        <p>Автор: {{ post.author }}</p>
+
+        {% if post in read %}
+            <p>Прочитан</p>
+        {% else %}
+            <p><a href="{% url 'add-read' post.pk %}"> Отметить прочитанным </a></p>
+        {% endif %}
+        <p><a href="{% url 'del-feed' post.author.pk %}">Отписаться от этого блога</a></p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,10 @@
+
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% for post in object_list %}
+        <p>{{ post.title }}</p>
+        <p>{{ post.text }}</p>
+        <p>{{ post.author }}</p>
+    {% endfor %}
+{% endblock %}

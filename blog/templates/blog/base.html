@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+</head>
+<body>
+    <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">SimpleBlog</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="{% url 'main' %}">Feed</a></li>
+      <li><a href="{% url 'my_blog' %}">Your blog</a></li>
+      <li><a href="{% url 'blogs' %}">All blogs</a></li>
+    </ul>
+  </div>
+</nav>
+    {% block content %}{% endblock %}
+</body>
+</html>
