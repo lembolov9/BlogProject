@@ -5,8 +5,9 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, FormView
 
+from blog.forms import GuiPostForm
 from blog.models import Post, UserBlog
 
 
@@ -72,3 +73,13 @@ class DelFeed(LogMixin, View):
         feed_blog.delete_feed(sub_user)
         sub_blog.delete_sub(request.user)
         return redirect('/')
+
+class AddPost(FormView):
+    template_name = 'blog/add_post.html'
+    form_class = GuiPostForm
+
+    def post(self, request, *args, **kwargs):
+        post = Post(title=request.POST['title'], text=request.POST['text'], author=request.user)
+        post.save()
+        return redirect('/my-blog')
+

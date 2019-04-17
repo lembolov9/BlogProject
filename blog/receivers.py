@@ -9,3 +9,5 @@ from blog.models import UserBlog
 def create_blog_for_user(sender, instance, created,  **kwargs):
     if created:
         UserBlog(owner=instance).save()
+
+

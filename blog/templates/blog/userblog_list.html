@@ -4,9 +4,9 @@
     {% for blog in object_list %}
         <p>{{ blog.owner }}</p>
         {% if blog.owner not in feed %}
-            <p><a href="{% url 'add-feed' blog.owner.pk %}">Подписаться</a></p>
+            <p><a href="{% url 'add_feed' blog.owner.pk %}">Подписаться</a></p>
         {% else %}
-            <p><a href="{% url 'del-feed' blog.owner.pk %}">Отписаться</a></p>
+            <p><a href="{% url 'del_feed' blog.owner.pk %}">Отписаться</a></p>
         {% endif %}
     {% endfor %}
 {% endblock %}
