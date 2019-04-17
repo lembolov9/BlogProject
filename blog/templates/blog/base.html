@@ -10,8 +10,9 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <ul class="nav navbar-nav">
+            <li><a href="#">Здравствуйте, {{ user }} !</a></li>
           <li><a href="{% url 'main' %}">Ваша лента</a></li>
-          <li><a href="{% url 'blog-posts' user  %}">Ваш блог</a></li>
+          <li><a href="{% url 'blog-posts' user.pk  %}">Ваш блог</a></li>
           <li><a href="{% url 'blogs' %}">Все блоги</a></li>
           <li><a href="{% url 'logout' %}">Выход</a></li>
         </ul>
