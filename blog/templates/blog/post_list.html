@@ -1,10 +1,11 @@
-
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <p><a href="{% url 'add_post' %}">Добавить пост</a></p>
+    {% if owner == user %}
+        <p><a href="{% url 'add-post' %}">Добавить пост</a></p>
+    {% endif %}
     {% for post in object_list %}
-        <p>{{ post.title }}</p>
-        <p>{{ post.text }}</p>
+        <p><a href="{% url 'post-detail' post.pk %}">Пост: {{ post.title }}</a></p>
+        <p style="margin-bottom: 50px">{{ post.text }}</p>
     {% endfor %}
 {% endblock %}

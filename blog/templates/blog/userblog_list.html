@@ -2,11 +2,11 @@
 
 {% block content %}
     {% for blog in object_list %}
-        <p>{{ blog.owner }}</p>
+        <p><a href="{% url 'blog-posts' blog.owner.pk %}">{{ blog.owner }}</a></p>
         {% if blog.owner not in feed %}
-            <p><a href="{% url 'add_feed' blog.owner.pk %}">Подписаться</a></p>
+            <p style="margin-bottom: 40px"><a href="{% url 'add-feed' blog.owner.pk %}">Подписаться</a></p>
         {% else %}
-            <p><a href="{% url 'del_feed' blog.owner.pk %}">Отписаться</a></p>
+            <p style="margin-bottom: 40px"><a href="{% url 'del-feed' blog.owner.pk %}">Отписаться</a></p>
         {% endif %}
     {% endfor %}
 {% endblock %}

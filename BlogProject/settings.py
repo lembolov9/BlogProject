@@ -27,9 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = '/'
-
-
+LOGIN_REDIRECT_URL = '/feed'
+LOGOUT_REDIRECT_URL ='/login'
+SITE_URL = 'http://127.0.0.1:8000/'
 
 # Application definition
 
@@ -123,3 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'project.django@yandex.ru'
+EMAIL_HOST_PASSWORD = 'Qazwsxedc0'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

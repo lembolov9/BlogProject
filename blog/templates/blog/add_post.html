@@ -1,9 +1,9 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<form action='{% url "add_post" %}' method='post'>
-{% csrf_token %}
-{{form.as_p}}
-<input type='submit' value='Сохранить' />
-</form>
+    <form action='{% url "add-post" %}' method='post'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type='submit' value='Сохранить' />
+    </form>
 {% endblock content %}

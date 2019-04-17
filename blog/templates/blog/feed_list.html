@@ -2,15 +2,15 @@
 
 {% block content %}
     {% for post in object_list %}
-        <p>Пост: {{ post.title }}</p>
+        <p><a href="{% url 'post-detail' post.pk %}">Пост: {{ post.title }}</a></p>
         <p>{{ post.text }}</p>
         <p>Автор: {{ post.author }}</p>
 
         {% if post in read %}
             <p>Прочитан</p>
         {% else %}
-            <p><a href="{% url 'add_read' post.pk %}"> Отметить прочитанным </a></p>
+            <p><a href="{% url 'add-read' post.pk %}"> Отметить прочитанным </a></p>
         {% endif %}
-        <p><a href="{% url 'del_feed' post.author.pk %}">Отписаться от этого блога</a></p>
+        <p style="margin-bottom: 40px"><a href="{% url 'del-feed' post.author.pk %}">Отписаться от этого блога</a></p>
     {% endfor %}
 {% endblock %}

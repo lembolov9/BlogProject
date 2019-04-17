@@ -1,18 +1,24 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-
-# Create your views here.
+from django.shortcuts import redirect
 from django.views import View
-from django.views.generic import ListView, FormView
+from django.views.generic import DetailView, FormView, ListView
 
 from blog.forms import GuiPostForm
 from blog.models import Post, UserBlog
 
 
 class LogMixin(LoginRequiredMixin):
-    login_url = 'accounts/login'
+    login_url = '/login'
+    redirect_field_name = 'redirect_to'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user.pk
+        return context
+
+class PostDetailView(LogMixin, DetailView):
+    model = Post
 
 class PostsView(LogMixin, ListView):
     model = Post
@@ -24,6 +30,11 @@ class BlogPostsView(PostsView):
     def get_queryset(self):
         posts = super().get_queryset().filter(author=self.request.user)
         return posts
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['owner'] = self.kwargs['pk']
+        return context
 
 
 class FeedView(PostsView):
@@ -54,7 +65,7 @@ class AddRead(LogMixin, View):
         blog = UserBlog.objects.get(owner=request.user)
         post = Post.objects.get(pk=post_pk)
         blog.add_read(post)
-        return redirect('/')
+        return redirect('main')
 
 class AddFeed(LogMixin, View):
     def get(self, request, user_pk):
@@ -63,7 +74,7 @@ class AddFeed(LogMixin, View):
         sub_user = User.objects.get(pk=user_pk)
         feed_blog.add_feed(sub_user)
         sub_blog.add_sub(request.user)
-        return redirect('/')
+        return redirect('main')
 
 class DelFeed(LogMixin, View):
     def get(self, request, user_pk):
@@ -72,14 +83,13 @@ class DelFeed(LogMixin, View):
         sub_user = User.objects.get(pk=user_pk)
         feed_blog.delete_feed(sub_user)
         sub_blog.delete_sub(request.user)
-        return redirect('/')
+        return redirect('main')
 
-class AddPost(FormView):
+class AddPost(LogMixin, FormView):
     template_name = 'blog/add_post.html'
     form_class = GuiPostForm
 
     def post(self, request, *args, **kwargs):
         post = Post(title=request.POST['title'], text=request.POST['text'], author=request.user)
         post.save()
-        return redirect('/my-blog')
-
+        return redirect('post-detail', post.pk)
